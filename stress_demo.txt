@@ -1,0 +1,15 @@
+GPU Stress Test — pushing utilization past the 90% kill zone
+============================================================
+  Step 1: 0.38 GB / 6.00 GB (6.4%)
+  Step 2: 0.75 GB / 6.00 GB (12.6%)
+  Step 3: 1.13 GB / 6.00 GB (18.8%)
+  Step 4: 1.50 GB / 6.00 GB (25.0%)
+  Step 5: 1.87 GB / 6.00 GB (31.2%)
+  Step 6: 2.25 GB / 6.00 GB (37.5%)
+  Step 7: 2.62 GB / 6.00 GB (43.7%)
+  Step 8: 2.99 GB / 6.00 GB (49.9%)
+  Step 9: 3.37 GB / 6.00 GB (56.1%)
+  Step 10: 3.74 GB / 6.00 GB (62.3%)
+  Step 11: 4.11 GB / 6.00 GB (68.6%)
+  Step 12: 4.48 GB / 6.00 GB (74.8%)
+  Step 13: 4.86 GB / 6.00 GB (81.0%)

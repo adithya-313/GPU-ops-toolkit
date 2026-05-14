@@ -80,6 +80,43 @@ This design ensures horizontal scalability, fault tolerance (if one server fails
 
 ---
 
+## Advanced Features
+
+### 5. Chaos Stress Test — `scripts/stress_test.py`
+
+Intentionally fills GPU memory in a loop to trigger the watchdog monitor and verify crash recovery.
+
+```bash
+python scripts/stress_test.py
+```
+
+**Caution:** This will be killed by the watchdog once memory crosses 90%.
+
+### 6. Health API — `src/health_api.py`
+
+A FastAPI server exposing a `/health` endpoint for load balancer health checks. Returns GPU detection status.
+
+```bash
+pip install fastapi uvicorn
+uvicorn src.health_api:app --host 0.0.0.0 --port 8000
+```
+
+```bash
+curl http://localhost:8000/health
+# {"status":"healthy","gpu":"detected"}
+```
+
+### 7. Docker Support — `Dockerfile`
+
+Containerise the entire toolkit with a single build:
+
+```bash
+docker build -t gpu-ops-toolkit .
+docker run -p 8000:8000 --gpus all gpu-ops-toolkit
+```
+
+---
+
 ## Project Status
 
 | Goal | Status |
