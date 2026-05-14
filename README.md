@@ -22,7 +22,17 @@ Profiles GPU memory usage before and after allocating a large tensor. Useful for
 python src/memory_profile.py
 ```
 
-### 3. Watchdog Monitor — `scripts/monitor_watchdog.sh`
+### 3. CSV Metrics Query — `scripts/query_metrics.sh`
+
+Captures real-time GPU utilisation, memory usage, and temperature as a clean CSV row (numbers only) for logging and analysis.
+
+```bash
+bash scripts/query_metrics.sh
+```
+
+Output is printed to console and saved to `gpu_stats.csv`.
+
+### 4. Watchdog Monitor — `scripts/monitor_watchdog.sh`
 
 Runs an infinite loop that polls GPU utilisation every 30 seconds and warns when usage exceeds 90%.
 
@@ -67,3 +77,15 @@ The toolkit is designed to support a production GPU inference pipeline with thre
 3. The selected **GPU Server** processes the request using its local NVIDIA GPU and returns the result through the load balancer back to the user.
 
 This design ensures horizontal scalability, fault tolerance (if one server fails, the balancer routes to the remaining two), and efficient resource utilisation across the GPU cluster.
+
+---
+
+## Project Status
+
+| Goal | Status |
+|---|---|
+| Stack verification script | Complete |
+| Python memory profiler | Complete |
+| Watchdog monitor guard | Complete |
+| CSV metrics extraction | Complete |
+| System architecture documentation | Complete |
