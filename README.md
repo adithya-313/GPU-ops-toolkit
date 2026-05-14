@@ -1,0 +1,69 @@
+# GPU-ops-toolkit
+
+A lightweight GPU monitoring, profiling, and operations toolkit built for developers and ops engineers managing GPU infrastructure.
+
+---
+
+## Scripts Overview
+
+### 1. Stack Verification — `scripts/verify_stack.sh`
+
+Checks whether the GPU drivers, CUDA toolkit, and PyTorch CUDA bindings are installed and compatible.
+
+```bash
+bash scripts/verify_stack.sh
+```
+
+### 2. Memory Profiler — `src/memory_profile.py`
+
+Profiles GPU memory usage before and after allocating a large tensor. Useful for understanding memory consumption patterns.
+
+```bash
+python src/memory_profile.py
+```
+
+### 3. Watchdog Monitor — `scripts/monitor_watchdog.sh`
+
+Runs an infinite loop that polls GPU utilisation every 30 seconds and warns when usage exceeds 90%.
+
+```bash
+bash scripts/monitor_watchdog.sh
+```
+
+Press `Ctrl+C` to stop.
+
+---
+
+## System Design: 3-Server Load-Balanced Architecture
+
+The toolkit is designed to support a production GPU inference pipeline with three dedicated GPU servers behind a single load balancer.
+
+### Architecture Diagram
+
+```
+        ┌──────────────┐
+        │    User      │
+        │  (Client)    │
+        └──────┬───────┘
+               │
+               ▼
+        ┌──────────────┐
+        │   Load       │
+        │   Balancer   │
+        │ (Round Robin)│
+        └──┬────┬────┬─┘
+           │    │    │
+     ┌─────▼┐ ┌▼────┐ ┌▼─────┐
+     │GPU   │ │GPU  │ │GPU   │
+     │Server│ │Server│ │Server│
+     │  1   │ │  2   │ │  3   │
+     └──────┘ └──────┘ └──────┘
+```
+
+### Request Flow
+
+1. A **User** sends an inference or training request to the system endpoint.
+2. The **Load Balancer** receives the request and forwards it to one of three GPU servers using a round-robin strategy.
+3. The selected **GPU Server** processes the request using its local NVIDIA GPU and returns the result through the load balancer back to the user.
+
+This design ensures horizontal scalability, fault tolerance (if one server fails, the balancer routes to the remaining two), and efficient resource utilisation across the GPU cluster.
